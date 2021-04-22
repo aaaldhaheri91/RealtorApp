@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using RealtorApp.Models;
+using System.Text.Encodings.Web;
 
 namespace RealtorApp.Controllers
 {
@@ -26,6 +27,11 @@ namespace RealtorApp.Controllers
         public IActionResult Privacy()
         {
             return View();
+        }
+
+        public string Welcome(string name, string lastName)
+        {
+            return HtmlEncoder.Default.Encode($"Hello {name} {lastName}");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
