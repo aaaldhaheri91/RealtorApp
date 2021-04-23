@@ -7,8 +7,26 @@
 <h1>Properties</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-controller="Login" asp-action="Login">Create New</a>
 </p>
+<form asp-controller="Property" asp-action="Index">
+    <p>
+        <select name="DropDownVal">
+                <option value="Price">Price</option>
+                <option value="Address">Address</option>
+                <option value="City">City</option>
+                <option value="Zip">Zip</option>
+                <option value="YearBuilt">Year Built</option>
+                <option value="PropertyType">Property Type</option>
+                <option value="SquareFeet">Square Feet</option>
+                <option value="Bedrooms">Bedrooms</option>
+                <option value="Bathrooms">Bathrooms</option>
+                <option value="GarageCapacity">Garage Capacity</option> 
+        </select> : 
+        <input type="text" name="SearchString" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
 <table class="table">
     <thead>
         <tr>
@@ -97,9 +115,9 @@
                 @Html.DisplayFor(modelItem => item.RelatorEmail)
             </td> *@
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-controller="Login" asp-action="LoginEdit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-controller="Login" asp-action="LoginDelete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
 }

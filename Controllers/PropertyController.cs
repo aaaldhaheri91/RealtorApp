@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RealtorApp.Data;
 using RealtorApp.Models;
-
 namespace RealtorApp.Controllers
 {
     public class PropertyController : Controller
@@ -20,9 +19,87 @@ namespace RealtorApp.Controllers
         }
 
         // GET: Property
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string dropDownVal, string searchString)
         {
-            return View(await _context.Property.ToListAsync());
+            var properties = from m in _context.Property
+                                select m;
+            Console.WriteLine($"drop down val {dropDownVal} search string: {searchString}");
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                int match = 0;
+                try 
+                {
+                    match = Int32.Parse(searchString);
+                }
+                catch(Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+                switch(dropDownVal)
+                {
+                    case "YearBuilt":
+                        properties = properties.Where(s => s.YearBuilt == match);
+                        break;
+                    case "Address":
+                        properties = properties.Where(s => s.Address.Contains(searchString));
+                        break;
+                    case "City":
+                        properties = properties.Where(s => s.City.Contains(searchString));
+                        break;
+                    case "Zip": 
+                        properties = properties.Where(s => s.Zip == match);
+                        break;
+                    case "Price": 
+                        decimal decimalMatch = 0;
+                        try 
+                        {
+                            decimalMatch = Decimal.Parse(searchString);
+                        }
+                        catch(Exception e)
+                        {
+                            Console.WriteLine(e.Message);
+                        }
+                        properties = properties.Where(s => s.Price == decimalMatch);
+                        break;
+                    case "PropertType": 
+                        properties = properties.Where(s => s.PropertyType.Contains(searchString));
+                        break;
+                    case "SquareFeet": 
+                        properties = properties.Where(s => s.SquareFeet == match);
+                        break;
+                    case "Bedrooms": 
+                        properties = properties.Where(s => s.Bedrooms == match);
+                        break;
+                    case "Bathrooms": 
+                        double doubleMatch = 0;
+                        try 
+                        {
+                            doubleMatch = Double.Parse(searchString);
+                        }
+                        catch(Exception e)
+                        {
+                            Console.WriteLine(e.Message);
+                        }
+                        properties = properties.Where(s => s.Bathrooms == doubleMatch);
+                        break;
+                    case "GarageCapacity": 
+                        doubleMatch = 0;
+                        try 
+                        {
+                            doubleMatch = Double.Parse(searchString);
+                        }
+                        catch(Exception e)
+                        {
+                            Console.WriteLine(e.Message);
+                        }
+                        properties = properties.Where(s => s.GarageCapacity == doubleMatch);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            
+            return View(await properties.ToListAsync());
         }
 
         // GET: Property/Details/5

@@ -8,8 +8,8 @@ using RealtorApp.Data;
 namespace RealtorApp.Migrations
 {
     [DbContext(typeof(PropertyContext))]
-    [Migration("20210422213513_User")]
-    partial class User
+    [Migration("20210422222555_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -74,9 +74,11 @@ namespace RealtorApp.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Password")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
